@@ -42,22 +42,22 @@ const appendPageLinks = (list) => {
    //create li, a, and ul and append them under div
    for(let i=0;i<pagesNumber;i++){
       let li = document.createElement("li"); //create a li tag
-      let a = document.createElement("a"); //create an a tag
+      let aLink = document.createElement("a"); //create an a tag
       ul.appendChild(li); //append created li tag to the parent ul tag
-      li.appendChild(a); //append created a tag to the parent li tag
-      a.setAttribute("href", "#"); //set tag a attribute as href = "#", means the link where take to the page top
-      a.appendChild(document.createTextNode(i+1)); //create text for the pagination, the text start at 1 instead of 0
+      li.appendChild(aLink); //append created a tag to the parent li tag
+      aLink.setAttribute("href", "#"); //set tag a attribute as href = "#", means the link where take to the page top
+      aLink.appendChild(document.createTextNode(i+1)); //create text for the pagination, the text start at 1 instead of 0
    }
    
    if(pagination && document.querySelectorAll("a")[0]){
    document.querySelectorAll('a')[0].className = "active";
 
-   a1 = document.querySelectorAll('a');
+   aTag = document.querySelectorAll('a');
    showPage(list, 1); //default page is page 1 and display first 10 people
    //loop through the page and change it based on cases
    
-   for(let x=0;x<a1.length;x++){
-      a1[x].addEventListener('click', (e) => {
+   for(let x=0;x<aTag.length;x++){
+      aTag[x].addEventListener('click', (e) => {
          showPage(list, x+1);
          for(let y=0;y<a1.length;y++){
             document.querySelectorAll("a")[y].className = ""; //the inner loop remove all the active class on every a tag
@@ -96,7 +96,7 @@ const searchBar = (searchInputValue, list) => {
 
    //if none result returned
 
-   if((searchInputValue.value.length === 0) || array.length === 0){ 
+   if((searchInputValue.value.length === 0) || (array.length === 0)){ 
       const noResultCheck = document.querySelector('h1'); //get all h1 tag
       if(noResultCheck){
          noResultCheck.remove(); //remove it to avoid duplicate
@@ -107,7 +107,15 @@ const searchBar = (searchInputValue, list) => {
       noResult.appendChild(noResultText); //append the text to h1
       const search = document.querySelector("div.student-search"); //get the student-search class
       search.appendChild(noResult); //append the warning text below the search box
-      appendPageLinks(list); //if no search item returned, just pagination it as normal
+      if(array.length === 0){ 
+         appendPageLinks(array); //if not result returned, don't display any items
+      }
+      if(searchInputValue.value.length === 0){ //if no search input, then remove the warning
+         const noResultCheck1 = document.querySelector('h1'); //get all h1 tag
+         noResultCheck1.remove(); //remove it to avoid duplicate
+         appendPageLinks(list); //if no search item returned, just pagination it as normal
+      }
+     
       
    } else {
       appendPageLinks(array); //throw the array in there
