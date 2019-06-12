@@ -59,7 +59,7 @@ const appendPageLinks = (list) => {
    for(let x=0;x<aTag.length;x++){
       aTag[x].addEventListener('click', (e) => {
          showPage(list, x+1);
-         for(let y=0;y<a1.length;y++){
+         for(let y=0;y<aTag.length;y++){
             document.querySelectorAll("a")[y].className = ""; //the inner loop remove all the active class on every a tag
          }
          e.target.className = "active";
